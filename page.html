@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <div>
+    <textarea id="userPrompt" placeholder="Type your message"></textarea>
+    <button onclick="sendMessage()">Send</button>
+  </div>
+  <div id="chatOutput"></div>
+
+  <script>
+    async function sendMessage() {
+      const userPrompt = document.getElementById('userPrompt').value;
+      
+      // Call your n8n webhook
+      const response = await fetch('https://YOUR-NGROK-URL/webhook/chatbot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: userPrompt })
+      });
+      
+      const data = await response.json();
+      document.getElementById('chatOutput').innerText = data.answer;
+    }
+  </script>
+</body>
+</html>
